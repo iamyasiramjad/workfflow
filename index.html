@@ -3,176 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consolidated AI Content Workflows</title>
+    <title>Consolidated AI Content Workflows - Detailed View</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
     <style>
         /* General Body and Layout Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-dark: #2d3748;
+            --text-light: #4a5568;
+            --bg-light: #f7fafc;
+            --border-color: #e2e8f0;
+            --code-bg: #2d3748;
         }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 20px 20px;
             padding: 20px;
             min-height: 100vh;
+            color: var(--text-dark);
         }
         
-        .main-container {
-            max-width: 1500px;
-            margin: 0 auto;
-        }
-
-        .main-header {
-            text-align: center;
-            color: #333;
-            margin-bottom: 25px;
-        }
-
-        .main-header h1 {
-            font-size: 3em;
-            font-weight: 700;
-            color: #4a4a4a;
-        }
+        .main-container { max-width: 1500px; margin: 0 auto; }
+        .main-header { text-align: center; margin-bottom: 30px; }
+        .main-header h1 { font-size: 3.5em; font-weight: 700; color: var(--text-dark); letter-spacing: -2px; }
 
         /* Tab Navigation Styles */
-        .tab-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: -2px; /* Overlap the border of the content */
-            position: relative;
-            z-index: 10;
-        }
-
-        .tab-link {
-            padding: 15px 25px;
-            cursor: pointer;
-            border: 2px solid #ddd;
-            border-bottom: none;
-            background-color: #f9f9f9;
-            border-radius: 12px 12px 0 0;
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #555;
-            transition: all 0.3s ease;
-            box-shadow: 0 -5px 10px -5px rgba(0,0,0,0.05);
-        }
-
-        .tab-link:hover {
-            background-color: #eef2f7;
-            color: #333;
-        }
-
-        .tab-link.active {
-            background: white;
-            color: #667eea;
-            border-color: #ddd;
-            border-bottom: 2px solid white;
-        }
+        .tab-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: -1px; position: relative; z-index: 10; }
+        .tab-link { padding: 15px 25px; cursor: pointer; border: 1px solid var(--border-color); background-color: #ffffff; border-radius: 12px 12px 0 0; font-size: 1.1em; font-weight: 600; color: var(--text-light); transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 -4px 12px -4px rgba(0,0,0,0.03); }
+        .tab-link:hover { background-color: #f8f9fc; color: var(--primary-color); }
+        .tab-link.active { background: white; color: var(--primary-color); border-bottom: 1px solid white; box-shadow: 0 -6px 15px -5px rgba(102, 126, 234, 0.2); }
 
         /* Tab Content Styles */
-        .tab-content {
-            display: none;
-            padding: 0;
-            border: 2px solid #ddd;
-            border-radius: 0 16px 16px 16px;
-            background-color: white;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
+        .tab-content { display: none; padding: 0; border: 1px solid var(--border-color); border-radius: 0 16px 16px 16px; background-color: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); overflow: hidden; }
         
         /* Shared Workflow Visualization Styles */
-        .container {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            background: white;
-            border-radius: 0;
-            box-shadow: none;
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
-        .header p { font-size: 1.1em; opacity: 0.9; }
+        .container { width: 100%; max-width: none; margin: 0; background: white; border-radius: 0; box-shadow: none; overflow: hidden; }
+        .header { background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.8em; margin-bottom: 10px; font-weight: 700; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
         .workflow-content { padding: 40px; overflow-x: auto; }
-        .phase { margin-bottom: 50px; border-left: 4px solid #667eea; padding-left: 30px; position: relative; }
-        .phase::before { content: ''; position: absolute; left: -8px; top: 0; width: 12px; height: 12px; background: #667eea; border-radius: 50%; }
-        .phase-title { font-size: 1.8em; color: #667eea; margin-bottom: 20px; font-weight: 600; }
-        .phase-desc { color: #666; margin-bottom: 25px; line-height: 1.6; }
-        .nodes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
         
-        .node {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+        .phase { margin-bottom: 60px; border-left: 4px solid var(--primary-color); padding-left: 40px; position: relative; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .phase.is-visible { opacity: 1; transform: translateY(0); }
+        .phase::before { content: ''; position: absolute; left: -10px; top: 5px; width: 16px; height: 16px; background: white; border: 4px solid var(--primary-color); border-radius: 50%; box-shadow: 0 0 10px rgba(102, 126, 234, 0.5); }
+        .phase-title { font-size: 2em; color: var(--primary-color); margin-bottom: 15px; font-weight: 600; }
+        .phase-desc { color: var(--text-light); margin-bottom: 30px; line-height: 1.6; font-size: 1.1em; }
+        .nodes { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 20px; }
         
-        .node:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2); border-color: #667eea; }
+        .node { background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; transition: all 0.3s ease; position: relative; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border-top: 4px solid; }
+        .node:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
         
-        /* --- VISIBILITY FIX FOR TRIGGER NODES --- */
-        .node.trigger {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
+        .node.trigger { background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; border-color: transparent; border-top-color: #a3b3f7; }
+        .node.trigger .node-title, .node.trigger .node-desc, .node.trigger .node-badge { color: white; }
+        .node.trigger .node-badge { background: rgba(255, 255, 255, 0.2); }
+        .node.trigger .details-toggle { background: rgba(255, 255, 255, 0.2); color: white; border-color: rgba(255, 255, 255, 0.3); }
+        
+        .node.router { background: #fff8e1; border-color: #ffe0b2; border-top-color: #ff9800;}
+        .node.processor { background: #e3f2fd; border-color: #bbdefb; border-top-color: #2196f3;}
+        .node.ai-agent { background: #f3e5f5; border-color: #e1bee7; border-top-color: #9c27b0;}
+        .node.research { background: #e8f5e9; border-color: #c8e6c9; border-top-color: #4caf50;}
+        .node.output { background: #e0f2f1; border-color: #b2dfdb; border-top-color: #009688;}
+        
+        .node-title { font-weight: 600; font-size: 1.2em; color: var(--text-dark); margin-bottom: 10px; }
+        .node-desc { font-size: 0.95em; color: var(--text-light); line-height: 1.5; }
+        .node-badge { display: inline-block; padding: 5px 12px; border-radius: 16px; font-size: 0.8em; font-weight: 600; margin-top: 15px; background: rgba(102, 126, 234, 0.1); color: var(--primary-color); }
+        
+        /* Details Toggle Button and Section */
+        .details-toggle { font-family: 'Inter', sans-serif; font-size: 0.8em; font-weight: 600; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border-color); background-color: var(--bg-light); color: var(--text-light); cursor: pointer; margin-top: 15px; transition: all 0.2s ease; }
+        .details-toggle:hover { background-color: #e2e8f0; color: var(--text-dark); }
+        .node-details { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; background-color: #f8fafc; border: 1px solid var(--border-color); }
+        .node-details h4 { font-size: 1em; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+        .node-details p { font-size: 0.9em; line-height: 1.6; color: var(--text-light); margin-bottom: 8px; }
+        .node-details p strong { color: var(--text-dark); font-weight: 600; }
+        .node-details pre { background-color: var(--code-bg); color: #e2e8f0; padding: 15px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; font-family: 'Fira Code', monospace; font-size: 0.85em; }
+
+        /* --- VISIBILITY FIX FOR TRIGGER NODE DETAILS --- */
+        .node.trigger .node-details {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.9);
         }
-        .node.trigger .node-title {
+        .node.trigger .node-details h4 {
             color: white;
-            opacity: 1;
+            border-bottom-color: rgba(255, 255, 255, 0.3);
         }
-        .node.trigger .node-desc {
-            color: white;
-            opacity: 0.9;
-        }
-        .node.trigger .node-badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
+        .node.trigger .node-details p { color: rgba(255, 255, 255, 0.9); }
+        .node.trigger .node-details p strong { color: white; }
         /* --- END OF FIX --- */
 
-        .node.router { background: #fff3e0; border-color: #ff9800; }
-        .node.processor { background: #e3f2fd; border-color: #2196f3; }
-        .node.ai-agent { background: #f3e5f5; border-color: #9c27b0; }
-        .node.research { background: #e8f5e9; border-color: #4caf50; }
-        .node.output { background: #c8e6c9; border-color: #4caf50; }
+        .flow-arrow { text-align: center; padding: 20px 0; color: var(--primary-color); font-size: 2.5em; opacity: 0.5; }
         
-        .node-title { font-weight: 600; font-size: 1.1em; color: #333; margin-bottom: 10px; }
-        .node-desc { font-size: 0.9em; color: #666; line-height: 1.5; }
-        .node-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.75em; font-weight: 600; margin-top: 10px; background: rgba(102, 126, 234, 0.1); color: #667eea; }
-        .flow-arrow { text-align: center; padding: 15px 0; color: #667eea; font-size: 2em; }
-        
-        .parallel-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; padding: 20px; background: #f5f5f5; border-radius: 12px; margin: 20px 0; }
-        .parallel-branch { background: white; padding: 20px; border-radius: 8px; border-left: 4px solid; }
+        .parallel-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; padding: 25px; background: var(--bg-light); border-radius: 12px; margin: 20px 0; border: 1px solid var(--border-color); }
+        .parallel-branch { background: white; padding: 20px; border-radius: 8px; border-left: 4px solid; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .parallel-branch.youtube { border-color: #ff0000; }
         .parallel-branch.linkedin { border-color: #0077b5; }
         .parallel-branch.tiktok { border-color: #000000; }
         .parallel-branch.instagram { border-color: #e4405f; }
         .branch-title { font-weight: 600; font-size: 1.2em; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .branch-step { padding: 10px; margin: 8px 0; background: #f9f9f9; border-radius: 6px; font-size: 0.9em; }
+        .branch-step { padding: 12px; margin: 8px 0; background: #f9fafb; border-radius: 6px; font-size: 0.9em; border: 1px solid var(--border-color);}
         
-        .legend { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; border-radius: 12px; margin-bottom: 30px; }
-        .legend-item { display: flex; align-items: center; gap: 10px; }
-        .legend-box { width: 30px; height: 30px; border-radius: 6px; border: 2px solid; }
+        .legend { display: flex; flex-wrap: wrap; gap: 20px; padding: 25px; background: var(--bg-light); border-radius: 12px; margin-bottom: 40px; border: 1px solid var(--border-color); }
+        .legend-item { display: flex; align-items: center; gap: 12px; font-weight: 500; }
+        .legend-box { width: 25px; height: 25px; border-radius: 6px; border: 2px solid; }
         
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 30px 0; }
-        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
-        .stat-number { font-size: 2.5em; font-weight: 700; margin-bottom: 5px; }
-        .stat-label { font-size: 0.9em; opacity: 0.9; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 40px 0; }
+        .stat-card { background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 25px; border-radius: 12px; text-align: center; }
+        .stat-number { font-size: 3em; font-weight: 700; margin-bottom: 5px; }
+        .stat-label { font-size: 1em; opacity: 0.9; }
 
-        .workflow-complete-banner { text-align: center; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; margin-top: 30px; }
-        .workflow-complete-banner h2 { font-size: 2em; margin-bottom: 15px; }
-        .workflow-complete-banner p { font-size: 1.2em; }
+        .workflow-complete-banner { text-align: center; padding: 40px; background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; border-radius: 12px; margin-top: 30px; }
+        .workflow-complete-banner h2 { font-size: 2.2em; margin-bottom: 15px; }
+        .workflow-complete-banner p { font-size: 1.3em; }
     </style>
 </head>
 <body>
@@ -199,84 +149,133 @@
                 </div>
                 <div class="workflow-content">
                     <div class="stats">
-                        <div class="stat-card"><div class="stat-number">70+</div><div class="stat-label">Total Nodes</div></div>
-                        <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Platforms</div></div>
-                        <div class="stat-card"><div class="stat-number">20</div><div class="stat-label">Ideas Generated</div></div>
-                        <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Research APIs</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="70">0</div><div class="stat-label">Total Nodes</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="4">0</div><div class="stat-label">Platforms</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="20">0</div><div class="stat-label">Ideas Generated</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="3">0</div><div class="stat-label">Research APIs</div></div>
                     </div>
                     <div class="legend">
-                        <div class="legend-item"><div class="legend-box trigger" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
-                        <div class="legend-item"><div class="legend-box router" style="background: #fff3e0; border-color: #ff9800;"></div><span>Router/Decision</span></div>
-                        <div class="legend-item"><div class="legend-box processor" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
-                        <div class="legend-item"><div class="legend-box ai-agent" style="background: #f3e5f5; border-color: #9c27b0;"></div><span>AI Agent</span></div>
-                        <div class="legend-item"><div class="legend-box research" style="background: #e8f5e9; border-color: #4caf50;"></div><span>Research/KB</span></div>
-                        <div class="legend-item"><div class="legend-box output" style="background: #c8e6c9; border-color: #4caf50;"></div><span>Final Output</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #fff8e1; border-color: #ff9800;"></div><span>Router/Decision</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #f3e5f5; border-color: #9c27b0;"></div><span>AI Agent</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e8f5e9; border-color: #4caf50;"></div><span>Research/KB</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e0f2f1; border-color: #009688;"></div><span>Final Output</span></div>
                     </div>
                     <div class="phase">
                         <h2 class="phase-title">Phase 1: Input Processing & Triage</h2><p class="phase-desc">Captures Slack messages and intelligently routes them based on content type and intent.</p>
                         <div class="nodes">
-                            <div class="node trigger"><div class="node-title">Slack Trigger</div><div class="node-desc">Monitors #social channel for messages and file uploads</div><span class="node-badge">Webhook</span></div>
-                            <div class="node processor"><div class="node-title">Intelligent Triage</div><div class="node-desc">Classifies content: KB files, finished scripts, research hashtags, or raw ideas</div><span class="node-badge">JavaScript</span></div>
-                            <div class="node router"><div class="node-title">Content Router</div><div class="node-desc">Routes to appropriate workflow: KB Loader, Video Finder, Script Repurposing, or Idea Generation</div><span class="node-badge">Switch Node</span></div>
+                            <div class="node trigger">
+                                <div class="node-title">Slack Trigger</div><div class="node-desc">Monitors #social channel for new messages and file uploads.</div><span class="node-badge">Webhook</span>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details"><h4>Configuration</h4><p><strong>Channel:</strong> #social</p><p><strong>Triggers on:</strong> New Message, File Share</p></div>
+                            </div>
+                            <div class="node processor">
+                                <div class="node-title">Intelligent Triage</div><div class="node-desc">Classifies content: KB files, finished scripts, research hashtags, or raw ideas.</div><span class="node-badge">JavaScript</span>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details"><h4>Logic</h4><p>Scans message text for keywords and patterns to classify the user's intent, setting a `classification` flag that determines the workflow's path.</p></div>
+                            </div>
+                            <div class="node router">
+                                <div class="node-title">Content Router</div><div class="node-desc">Routes to the appropriate sub-workflow based on the triage classification.</div><span class="node-badge">Switch Node</span>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details"><h4>Routing Rules</h4><p>Routes data to one of four outputs based on the `classification` flag from the previous node (e.g., `knowledge_base_file`, `finished_script`, etc.).</p></div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 2: Content Type Detection</h2><p class="phase-desc">Parses Slack message structure and extracts content based on type (audio, text, video, link).</p>
+                        <h2 class="phase-title">Phase 2: Content Type Detection</h2><p class="phase-desc">Parses the Slack message to extract the core content, whether it's text, a link, or a file for transcription.</p>
                         <div class="nodes">
-                            <div class="node processor"><div class="node-title">Detect Message Type</div><div class="node-desc">Extracts URLs, detects model preferences, parses file metadata</div><span class="node-badge">JavaScript</span></div>
-                            <div class="node router"><div class="node-title">Content Type Switcher</div><div class="node-desc">Routes to: Audio → Transcription, Text → Direct, Video/Link → Transcript Extraction</div><span class="node-badge">Switch Node</span></div>
-                        </div>
-                        <div class="nodes" style="margin-top: 20px;">
-                            <div class="node processor"><div class="node-title">Download Audio</div><div class="node-desc">Fetches audio files from Slack.</div></div>
-                            <div class="node ai-agent"><div class="node-title">Transcribe Audio</div><div class="node-desc">OpenAI Whisper API transcription</div><span class="node-badge">OpenAI</span></div>
-                            <div class="node processor"><div class="node-title">Enhanced Video Processor</div><div class="node-desc">Apify API extracts subtitles from YouTube, Vimeo, TikTok</div><span class="node-badge">Apify</span></div>
+                           <div class="node processor"><div class="node-title">Detect Message Type</div><div class="node-desc">Extracts URLs, text, and file metadata from the Slack message.</div><span class="node-badge">JavaScript</span></div>
+                            <div class="node processor"><div class="node-title">Enhanced Video Processor</div><div class="node-desc">Uses the Apify API to extract a transcript from a video URL.</div><span class="node-badge">Apify API</span></div>
+                             <div class="node ai-agent"><div class="node-title">Transcribe Audio</div><div class="node-desc">If an audio file is detected, it's transcribed using OpenAI's Whisper model.</div><span class="node-badge">OpenAI Whisper</span></div>
                         </div>
                     </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="phase">
-                        <h2 class="phase-title">Phase 3: Master Idea Development</h2><p class="phase-desc">Combines all inputs and expands seed idea into a comprehensive information package.</p>
+                     <div class="flow-arrow">↓</div>
+                     <div class="phase">
+                        <h2 class="phase-title">Phase 3: Master Idea Development</h2><p class="phase-desc">The extracted text is sent to a powerful AI agent to expand it into a rich, structured "Master Idea" object.</p>
                         <div class="nodes">
-                            <div class="node processor"><div class="node-title">Merge Node</div><div class="node-desc">Combines audio, text, and video transcripts.</div></div>
-                            <div class="node ai-agent"><div class="node-title">Idea Creation Agent</div><div class="node-desc">GPT-4.1-mini expands idea into structured JSON with 20+ fields.</div><span class="node-badge">GPT-4.1-mini</span></div>
-                            <div class="node processor"><div class="node-title">Create Master Ideas</div><div class="node-desc">Parses AI JSON output into a structured object.</div><span class="node-badge">JavaScript</span></div>
+                            <div class="node ai-agent">
+                                <div class="node-title">Idea Creation Agent</div><div class="node-desc">GPT-4.1-mini expands the core idea into a detailed JSON object with over 20 fields.</div><span class="node-badge">GPT-4.1-mini</span>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details"><h4>AI System Prompt</h4><p>Instructs the AI to act as a "Platform-Agnostic Idea Expansion Engine" and return a single JSON object with keys like `core_thesis`, `key_points`, `faqs`, `analogies`, `myths_and_reframes`, etc. It is explicitly told to avoid platform-specific language.</p></div>
+                            </div>
+                            <div class="node processor"><div class="node-title">Create Master Ideas</div><div class="node-desc">Parses the AI's raw text output into a usable JSON object for the next steps.</div><span class="node-badge">JavaScript</span></div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 4: Viral Research & Analysis</h2><p class="phase-desc">Parallel research across 3 platforms to identify proven content patterns.</p>
+                        <h2 class="phase-title">Phase 4: Viral Research & Analysis</h2><p class="phase-desc">The Master Idea is used to fuel parallel research pipelines across platforms, identifying proven content patterns.</p>
                         <div class="parallel-container">
-                            <div class="parallel-branch youtube"><div class="branch-title">🎥 YouTube Pipeline</div><div class="branch-step">1. Apify YouTube Scraper (5 videos + SRT)</div><div class="branch-step">2. Clean SRT Format & Split Videos</div><div class="branch-step">3. AI Analyzer: Patterns, Hooks</div><div class="branch-step">4. Combine with Master Idea</div></div>
-                            <div class="parallel-branch tiktok"><div class="branch-title">🎵 TikTok Pipeline</div><div class="branch-step">1. Apify TikTok Scraper (5 videos + VTT)</div><div class="branch-step">2. Download & Clean VTT Files</div><div class="branch-step">3. Analyze Each Video (Angle, Hook)</div><div class="branch-step">4. Combine with Master Idea</div></div>
-                            <div class="parallel-branch instagram"><div class="branch-title">📸 Instagram Pipeline</div><div class="branch-step">1. Apify Hashtag Scraper (5 stories)</div><div class="branch-step">2. Standardize Data</div><div class="branch-step">3. AI Analyzer: Visual Patterns</div><div class="branch-step">4. Combine with Master Idea</div></div>
+                            <div class="parallel-branch youtube"><div class="branch-title">🎥 YouTube</div><div class="branch-step"><strong>Scrape:</strong> Apify finds 5 videos based on idea keywords.</div><div class="branch-step"><strong>Process:</strong> Extracts and cleans SRT subtitles.</div><div class="branch-step"><strong>Analyze:</strong> An AI agent analyzes each transcript for hooks, structure, and patterns.</div></div>
+                            <div class="parallel-branch tiktok"><div class="branch-title">🎵 TikTok</div><div class="branch-step"><strong>Scrape:</strong> Apify finds 5 videos based on the idea's thesis.</div><div class="branch-step"><strong>Process:</strong> Downloads and cleans VTT transcripts.</div><div class="branch-step"><strong>Analyze:</strong> An AI agent analyzes each transcript for angle, hook, and structure.</div></div>
+                            <div class="parallel-branch instagram"><div class="branch-title">📸 Instagram</div><div class="branch-step"><strong>Scrape:</strong> Apify finds 5 posts based on idea hashtags.</div><div class="branch-step"><strong>Process:</strong> Standardizes post data (likes, comments, captions).</div><div class="branch-step"><strong>Analyze:</strong> An AI agent analyzes captions and metadata for engagement patterns.</div></div>
                         </div>
                     </div>
-                    <div class="flow-arrow">↓</div>
+                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 5: Platform-Specific Content Generation</h2><p class="phase-desc">A knowledge base-driven approach generates 5 concepts per platform (20 total).</p>
-                        <div class="parallel-container">
-                             <div class="parallel-branch youtube"><div class="branch-title">🎥 YouTube Generation</div><div class="branch-step">KB Search → AI Expands → 5 Concepts</div></div>
-                            <div class="parallel-branch linkedin"><div class="branch-title">💼 LinkedIn Generation</div><div class="branch-step">KB Search → AI Expands → 5 Concepts</div></div>
-                            <div class="parallel-branch tiktok"><div class="branch-title">🎵 TikTok Generation</div><div class="branch-step">KB Search → AI Expands → 5 Concepts</div></div>
-                            <div class="parallel-branch instagram"><div class="branch-title">📸 Instagram Generation</div><div class="branch-step">KB Search → AI Expands → 5 Concepts</div></div>
-                        </div>
-                    </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="phase">
-                        <h2 class="phase-title">Phase 6: Tone of Voice Refinement</h2><p class="phase-desc">Individual AI refinement of all 20 ideas for platform-specific tone and clarity.</p>
+                        <h2 class="phase-title">Phase 5: Platform-Specific Content Generation</h2><p class="phase-desc">An AI agent uses the Master Idea and Viral Analysis to query a dedicated knowledge base for each platform, generating 5 tailored concepts per platform.</p>
                         <div class="nodes">
-                            <div class="node processor"><div class="node-title">Split Ideas into Items</div><div class="node-desc">Separates 20 concepts for individual processing.</div></div>
-                            <div class="node ai-agent"><div class="node-title">Tone of Voice Agent</div><div class="node-desc">GPT-4.1-mini refines each idea for clarity and tone.</div><span class="node-badge">GPT-4.1-mini</span></div>
-                             <div class="node processor"><div class="node-title">Group by Platform</div><div class="node-desc">Re-aggregates the 20 refined ideas.</div></div>
+                            <div class="node ai-agent">
+                                <div class="node-title">Platform Content Generation</div>
+                                <div class="node-desc">Four parallel AI agents (one for each platform) generate 5 new content ideas.</div>
+                                <span class="node-badge">4x AI Agents</span>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Process per Platform</h4>
+                                    <p><strong>1. Tool Use:</strong> The AI is given a dedicated tool (e.g., `youtube_knowledge_search`) which is a Pinecone vector store.</p>
+                                    <p><strong>2. Search:</strong> It uses the Master Idea as a query to retrieve the most relevant passages from the knowledge base.</p>
+                                    <p><strong>3. Expand:</strong> The AI is instructed to ignore the user's original idea and expand ONLY on the content retrieved from the knowledge base, creating 5 new concepts.</p>
+                                    <p><strong>4. Format:</strong> Returns the 5 concepts in a structured JSON format.</p>
+                                </div>
+                            </div>
+                            <div class="node research">
+                                <div class="node-title">Knowledge Base Search</div>
+                                <div class="node-desc">Each AI agent is equipped with a tool to search a platform-specific Pinecone vector database.</div>
+                                <span class="node-badge">Pinecone</span>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Vector Stores</h4>
+                                    <p><strong>YouTube Index:</strong> `youtube-knowledge`</p>
+                                    <p><strong>LinkedIn Index:</strong> `linkedin-knowledge`</p>
+                                    <p><strong>TikTok Index:</strong> `tiktok-knowledge`</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 7: Final Assembly & Notion Export</h2><p class="phase-desc">Creates comprehensive Notion pages with structured, toggleable content.</p>
-                         <div class="nodes">
-                            <div class="node processor"><div class="node-title">Combine Final Data</div><div class="node-desc">Merges all data streams for final output.</div></div>
-                            <div class="node processor"><div class="node-title">Build Notion Blocks</div><div class="node-desc">Transforms data into Notion's block structure.</div></div>
-                            <div class="node output"><div class="node-title">Create/Update Notion Page</div><div class="node-desc">Exports all content to the Notion database.</div><span class="node-badge">Notion API</span></div>
+                        <h2 class="phase-title">Phase 6: Tone of Voice Refinement</h2><p class="phase-desc">Each of the 20 generated ideas is individually processed by a final AI agent to refine its clarity, tone, and platform-specific language.</p>
+                        <div class="nodes">
+                            <div class="node processor"><div class="node-title">Split Ideas into Items</div><div class="node-desc">Separates the 20 concepts from all platforms into individual items for processing.</div></div>
+                            <div class="node ai-agent">
+                                <div class="node-title">Tone of Voice Agent</div>
+                                <div class="node-desc">GPT-4.1-mini refines each of the 20 ideas, improving clarity while preserving intent.</div>
+                                <span class="node-badge">GPT-4.1-mini</span>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>AI System Prompt</h4>
+                                    <p>Instructs the AI to act as an expert content strategist. Its job is to refine the raw idea, improving clarity and adapting the tone for the specified platform, then return the result in the exact same JSON format.</p>
+                                </div>
+                            </div>
+                            <div class="node processor"><div class="node-title">Group Refined Ideas</div><div class="node-desc">Re-aggregates the 20 refined ideas back into their 4 platform groups.</div></div>
+                        </div>
+                    </div>
+                     <div class="flow-arrow">↓</div>
+                    <div class="phase">
+                        <h2 class="phase-title">Phase 7: Final Assembly & Notion Export</h2><p class="phase-desc">All data streams are combined into a final object, which is then used to construct and populate a rich, detailed page in the Notion database.</p>
+                        <div class="nodes">
+                            <div class="node processor"><div class="node-title">Combine Final Data</div><div class="node-desc">Merges the refined ideas, original ideas, master idea, and viral analysis into one object per platform.</div></div>
+                            <div class="node processor">
+                                <div class="node-title">Build Notion Blocks</div>
+                                <div class="node-desc">Transforms the final data object into a structured array of Notion blocks, including toggles and callouts.</div>
+                                 <span class="node-badge">JavaScript</span>
+                            </div>
+                            <div class="node output">
+                                <div class="node-title">Create & Append to Notion</div>
+                                <div class="node-desc">Creates a new page in the "Final Content Hub" database and then appends all the generated blocks.</div>
+                                <span class="node-badge">Notion API</span>
+                            </div>
                         </div>
                     </div>
                     <div class="workflow-complete-banner"><h2>🎉 Workflow Complete</h2><p>Rich, multi-platform content strategy delivered to Notion</p></div>
@@ -290,55 +289,98 @@
                 <div class="header"><h1>🔎 Viral Video Finder</h1><p>Automated Social Media Content Discovery & Notion Logging</p></div>
                 <div class="workflow-content">
                     <div class="stats">
-                        <div class="stat-card"><div class="stat-number">11</div><div class="stat-label">Total Nodes</div></div>
-                        <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Platforms Scraped</div></div>
-                        <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label">Posts Analyzed</div></div>
-                        <div class="stat-card"><div class="stat-number">1</div><div class="stat-label">Notion Database</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="11">0</div><div class="stat-label">Total Nodes</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="2">0</div><div class="stat-label">Platforms Scraped</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="20">0</div><div class="stat-label">Posts Analyzed</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="1">0</div><div class="stat-label">Notion Database</div></div>
                     </div>
                     <div class="legend">
-                        <div class="legend-item"><div class="legend-box trigger" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
-                        <div class="legend-item"><div class="legend-box processor" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
-                        <div class="legend-item"><div class="legend-box research" style="background: #e8f5e9; border-color: #4caf50;"></div><span>Research/API</span></div>
-                        <div class="legend-item"><div class="legend-box output" style="background: #c8e6c9; border-color: #4caf50;"></div><span>Final Output</span></div>
+                         <div class="legend-item"><div class="legend-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e8f5e9; border-color: #4caf50;"></div><span>Research/API</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e0f2f1; border-color: #009688;"></div><span>Final Output</span></div>
                     </div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 1: Input & Topic Extraction</h2><p class="phase-desc">The workflow is triggered by another process and begins by extracting the research topic from the input message.</p>
+                        <h2 class="phase-title">Phase 1: Input & Topic Extraction</h2><p class="phase-desc">The workflow is triggered by the Master Workflow and begins by extracting the research topic.</p>
                         <div class="nodes">
                             <div class="node trigger"><div class="node-title">When Executed by Another Workflow</div><div class="node-desc">Receives a signal to start, containing the research request.</div></div>
-                            <div class="node processor"><div class="node-title">Extract Topic</div><div class="node-desc">Parses the incoming message to identify the core topic and hashtags for research.</div></div>
+                            <div class="node processor"><div class="node-title">Extract Topic</div><div class="node-desc">Parses the incoming message to identify the core topic and hashtags for research.</div><span class="node-badge">JavaScript</span></div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 2: Parallel Data Scraping</h2><p class="phase-desc">Simultaneously scrapes TikTok and Instagram for recent, popular posts related to the extracted topic.</p>
+                        <h2 class="phase-title">Phase 2: Parallel Data Scraping</h2><p class="phase-desc">Simultaneously scrapes TikTok and Instagram for the top 10 most relevant posts for the topic.</p>
                         <div class="nodes">
-                            <div class="node research"><div class="node-title">TikTok Scraper</div><div class="node-desc">Uses Apify API to find the top 10 videos for the target hashtags on TikTok.</div></div>
-                            <div class="node research"><div class="node-title">Instagram Scraper</div><div class="node-desc">Uses Apify API to find the top 10 posts for the target hashtags on Instagram.</div></div>
+                            <div class="node research">
+                                <div class="node-title">TikTok Scraper</div>
+                                <div class="node-desc">Uses Apify API to find the top 10 videos for the target hashtags on TikTok.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>API Call</h4>
+                                    <p><strong>Endpoint:</strong> `clockworks~tiktok-scraper/run-sync-get-dataset-items`</p>
+                                    <p><strong>Parameters:</strong> Sends `hashtags` and sets `resultsPerPage: 10`.</p>
+                                </div>
+                            </div>
+                            <div class="node research">
+                                <div class="node-title">Instagram Scraper</div>
+                                <div class="node-desc">Uses Apify API to find the top 10 posts for the target hashtags on Instagram.</div>
+                                 <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                     <h4>API Call</h4>
+                                    <p><strong>Endpoint:</strong> `apify~instagram-hashtag-scraper/run-sync-get-dataset-items`</p>
+                                    <p><strong>Parameters:</strong> Sends `hashtags` and sets `resultsLimit: 10`.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 3: Data Processing & Standardization</h2><p class="phase-desc">Filters and cleans the raw data from both platforms, standardizing it for analysis.</p>
+                        <h2 class="phase-title">Phase 3: Data Processing & Standardization</h2><p class="phase-desc">Filters and cleans the raw data from both platforms, standardizing it into a common format for analysis and ranking.</p>
                         <div class="nodes">
-                            <div class="node processor"><div class="node-title">Process TikTok</div><div class="node-desc">Filters for viral content (e.g., >5000 likes), sorts by engagement, and extracts key metadata.</div></div>
-                            <div class="node processor"><div class="node-title">Process Instagram</div><div class="node-desc">Sorts posts by like count, standardizes the data structure, and identifies video content.</div></div>
+                            <div class="node processor">
+                                <div class="node-title">Process TikTok</div>
+                                <div class="node-desc">Filters for viral content, sorts by likes, and extracts key metadata like URL, author, and engagement counts.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Logic</h4>
+                                    <p>Filters results where `diggCount > 5000` to focus on truly viral content. It then maps the raw API data to a clean, standardized object.</p>
+                                </div>
+                            </div>
+                            <div class="node processor">
+                                <div class="node-title">Process Instagram</div>
+                                <div class="node-desc">Sorts all posts by like count and standardizes the data structure to match the TikTok output.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Logic</h4>
+                                    <p>Unlike the TikTok processor, this node processes all results first and then sorts the entire collection by `likesCount` to ensure the top content is selected, even if some posts have unavailable like data.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
-                    <div class="phase">
-                        <h2 class="phase-title">Phase 4: Consolidation & Ranking</h2><p class="phase-desc">Merges the processed data from both platforms into a single, ranked list based on overall engagement.</p>
+                     <div class="phase">
+                        <h2 class="phase-title">Phase 4: Consolidation & Notion Export</h2><p class="phase-desc">Merges the data, creates a beautiful Notion page for each viral post, and populates it with content.</p>
                         <div class="nodes">
-                            <div class="node processor"><div class="node-title">Merge Results</div><div class="node-desc">Combines the cleaned TikTok and Instagram data streams into one unified dataset.</div></div>
-                            <div class="node processor"><div class="node-title">Combine & Rank</div><div class="node-desc">Sorts all content by like count to identify the top performers across both platforms and assigns a rank.</div></div>
-                        </div>
-                    </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="phase">
-                        <h2 class="phase-title">Phase 5: Notion Export & Final Output</h2><p class="phase-desc">Formats the ranked list into structured content for Notion and creates a new page for each piece of viral content.</p>
-                        <div class="nodes">
-                            <div class="node processor"><div class="node-title">Build Notion Page Content</div><div class="node-desc">Constructs the body of the Notion page, including metrics, links, and captions.</div></div>
-                            <div class="node output"><div class="node-title">Save to Notion</div><div class="node-desc">Creates a new page in the 'Viral Video Database' with key properties.</div></div>
-                             <div class="node output"><div class="node-title">Append Page Content (API)</div><div class="node-desc">Appends the structured blocks to the newly created Notion page.</div></div>
+                            <div class="node processor"><div class="node-title">Combine & Rank</div><div class="node-desc">Merges TikTok & Instagram data and sorts all content by likes to create a final ranked list.</div></div>
+                            <div class="node processor">
+                                <div class="node-title">Build Notion Page Content</div>
+                                <div class="node-desc">Constructs a rich page body with metrics, links, and captions, using Notion's block format.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Action</h4>
+                                    <p>Generates a JSON structure representing Notion blocks, including multi-column layouts for stats, toggles for captions, and formatted paragraphs for links.</p>
+                                </div>
+                            </div>
+                            <div class="node output">
+                                <div class="node-title">Save to Notion & Append Content</div>
+                                <div class="node-desc">First creates a new page in the 'Viral Video Database', then appends the formatted blocks to it.</div>
+                                 <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Action</h4>
+                                    <p><strong>Step 1 (POST):</strong> Creates a new page with core properties like `Title`, `Platform`, and `Rank`.</p>
+                                    <p><strong>Step 2 (PATCH):</strong> Appends the rich block content (children) to the page ID created in Step 1.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="workflow-complete-banner"><h2>🎉 Workflow Complete</h2><p>Ranked list of viral content delivered to Notion.</p></div>
@@ -352,43 +394,78 @@
                 <div class="header"><h1>📚 Master Knowledge Base Loader</h1><p>Automated File Ingestion & Vectorization for AI</p></div>
                 <div class="workflow-content">
                     <div class="stats">
-                        <div class="stat-card"><div class="stat-number">29</div><div class="stat-label">Total Nodes</div></div>
-                        <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Vector Databases</div></div>
-                        <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">File Types Handled</div></div>
-                        <div class="stat-card"><div class="stat-number">1000+</div><div class="stat-label">Chunks per File</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="29">0</div><div class="stat-label">Total Nodes</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="3">0</div><div class="stat-label">Vector Databases</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="3">0</div><div class="stat-label">File Types Handled</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="1000">0</div><div class="stat-label">Chunks per File</div></div>
                     </div>
                     <div class="legend">
-                        <div class="legend-item"><div class="legend-box trigger" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
-                        <div class="legend-item"><div class="legend-box router" style="background: #fff3e0; border-color: #ff9800;"></div><span>Router/Decision</span></div>
-                        <div class="legend-item"><div class="legend-box processor" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
-                        <div class="legend-item"><div class="legend-box research" style="background: #e8f5e9; border-color: #4caf50;"></div><span>KB/Vector Store</span></div>
-                        <div class="legend-item"><div class="legend-box output" style="background: #c8e6c9; border-color: #4caf50;"></div><span>Final Output</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #fff8e1; border-color: #ff9800;"></div><span>Router/Decision</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e8f5e9; border-color: #4caf50;"></div><span>KB/Vector Store</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e0f2f1; border-color: #009688;"></div><span>Final Output</span></div>
                     </div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 1: File Intake & Triage</h2><p class="phase-desc">Captures a file upload, downloads it securely, and intelligently detects the file type to determine the correct processing path.</p>
+                        <h2 class="phase-title">Phase 1: File Intake & Triage</h2><p class="phase-desc">Captures a file upload from the Master Workflow, downloads it, and detects its type to determine the correct processing path.</p>
                         <div class="nodes">
-                            <div class="node trigger"><div class="node-title">When Executed by Another Workflow</div><div class="node-desc">Receives a file and metadata from the Master Workflow.</div></div>
-                            <div class="node processor"><div class="node-title">HTTP Request</div><div class="node-desc">Securely downloads the file from its private URL.</div></div>
-                            <div class="node processor"><div class="node-title">File Type Detector</div><div class="node-desc">Analyzes file extension to classify it as PDF, TXT, etc.</div></div>
-                            <div class="node router"><div class="node-title">File Type Switch</div><div class="node-desc">Routes the file to the appropriate extractor.</div></div>
+                            <div class="node trigger"><div class="node-title">When Executed by Another Workflow</div><div class="node-desc">Receives a file and metadata.</div></div>
+                            <div class="node processor"><div class="node-title">HTTP Request</div><div class="node-desc">Securely downloads the file using a private URL and auth token.</div></div>
+                            <div class="node processor"><div class="node-title">File Type Detector</div><div class="node-desc">Analyzes file extension (pdf, docx, txt) to classify it.</div></div>
+                            <div class="node router"><div class="node-title">File Type Switch</div><div class="node-desc">Routes the file to the appropriate text extractor based on its type.</div></div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 2: Content Extraction & Normalization</h2><p class="phase-desc">Extracts raw text from the file and standardizes the output, handling unsupported file types gracefully.</p>
+                        <h2 class="phase-title">Phase 2: Text Chunking & Vectorization</h2><p class="phase-desc">The extracted text is intelligently split into small, overlapping chunks. Each chunk is then converted into a numerical vector by an AI model.</p>
                         <div class="nodes">
-                            <div class="node processor"><div class="node-title">PDF/TXT Extractor</div><div class="node-desc">Parses the file to extract all textual content.</div></div>
-                            <div class="node processor"><div class="node-title">Content Normalizer</div><div class="node-desc">Combines text with metadata into a clean data object.</div></div>
-                            <div class="node processor"><div class="node-title">Unsupported File Handler</div><div class="node-desc">Creates an error message for unsupported files.</div></div>
+                             <div class="node processor">
+                                <div class="node-title">Platform Text Splitter</div>
+                                <div class="node-desc">Splits the extracted text into small chunks suitable for the vector database.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Configuration</h4>
+                                    <p><strong>Chunk Size:</strong> 1000 characters</p>
+                                    <p><strong>Chunk Overlap:</strong> 200 characters</p>
+                                    <p><strong>Logic:</strong> An enhanced splitter tries to break text along natural separators (paragraphs, sentences) before falling back to fixed-size chunks.</p>
+                                </div>
+                            </div>
+                            <div class="node ai-agent">
+                                <div class="node-title">OpenAI Embeddings</div>
+                                <div class="node-desc">Converts each text chunk into a high-dimensional vector embedding.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Configuration</h4>
+                                    <p><strong>Model:</strong> `text-embedding-3-large`</p>
+                                    <p><strong>Action:</strong> For each piece of text, the AI generates a numerical representation (vector) that captures its semantic meaning.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
-                        <h2 class="phase-title">Phase 3: Parallel Processing & Vectorization</h2><p class="phase-desc">The text is split into chunks, converted into vector embeddings by an AI, and stored in the appropriate Pinecone database for the target platform.</p>
-                        <div class="parallel-container">
-                            <div class="parallel-branch youtube"><div class="branch-title">YouTube Pipeline</div><div class="branch-step">1. Text Splitter</div><div class="branch-step">2. OpenAI Embeddings</div><div class="branch-step">3. Store in Pinecone</div><div class="branch-step">4. Slack Success Notification</div></div>
-                            <div class="parallel-branch linkedin"><div class="branch-title">LinkedIn Pipeline</div><div class="branch-step">1. Text Splitter</div><div class="branch-step">2. OpenAI Embeddings</div><div class="branch-step">3. Store in Pinecone</div><div class="branch-step">4. Slack Success Notification</div></div>
-                            <div class="parallel-branch tiktok"><div class="branch-title">TikTok Pipeline</div><div class="branch-step">1. Text Splitter</div><div class="branch-step">2. OpenAI Embeddings</div><div class="branch-step">3. Store in Pinecone</div><div class="branch-step">4. Slack Success Notification</div></div>
+                        <h2 class="phase-title">Phase 3: Storage & Notification</h2><p class="phase-desc">The generated vectors (along with their original text) are stored in the correct platform-specific Pinecone database, and a success message is sent to Slack.</p>
+                         <div class="nodes">
+                             <div class="node research">
+                                <div class="node-title">Pinecone Vector Store</div>
+                                <div class="node-desc">Inserts the text chunks and their corresponding vectors into the target database.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Configuration</h4>
+                                    <p><strong>Action:</strong> Insert</p>
+                                    <p><strong>Pinecone Index:</strong> Routes to `youtube-knowledge`, `linkedin-knowledge`, or `tiktok-knowledge` based on the file's designated platform.</p>
+                                    <p><strong>Namespace:</strong> `Ideation`</p>
+                                </div>
+                            </div>
+                            <div class="node output">
+                                <div class="node-title">Success Notification</div>
+                                <div class="node-desc">Sends a confirmation message back to the #social Slack channel.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Message Content</h4>
+                                    <p>Includes the original filename, the target platform, the number of chunks created, and a "Ready for AI queries" status.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="workflow-complete-banner"><h2>🎉 Workflow Complete</h2><p>File processed and knowledge stored in vector databases.</p></div>
@@ -402,41 +479,79 @@
                 <div class="header"><h1>🎨 Standalone Tone of Voice Repurposing</h1><p>AI-Powered Script Adaptation & Quality Assurance</p></div>
                 <div class="workflow-content">
                      <div class="stats">
-                        <div class="stat-card"><div class="stat-number">15</div><div class="stat-label">Total Nodes</div></div>
-                        <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Platforms</div></div>
-                        <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">AI Agents</div></div>
-                        <div class="stat-card"><div class="stat-number">1</div><div class="stat-label">QA Loop</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="15">0</div><div class="stat-label">Total Nodes</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="3">0</div><div class="stat-label">Platforms</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="2">0</div><div class="stat-label">AI Agents</div></div>
+                        <div class="stat-card"><div class="stat-number" data-target="1">0</div><div class="stat-label">QA Loop</div></div>
                     </div>
                     <div class="legend">
-                        <div class="legend-item"><div class="legend-box trigger" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
-                        <div class="legend-item"><div class="legend-box router" style="background: #fff3e0; border-color: #ff9800;"></div><span>Router/Decision</span></div>
-                        <div class="legend-item"><div class="legend-box processor" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
-                        <div class="legend-item"><div class="legend-box ai-agent" style="background: #f3e5f5; border-color: #9c27b0;"></div><span>AI Agent</span></div>
-                        <div class="legend-item"><div class="legend-box output" style="background: #c8e6c9; border-color: #4caf50;"></div><span>Final Output</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;"></div><span>Trigger/Start</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #fff8e1; border-color: #ff9800;"></div><span>Router/Decision</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e3f2fd; border-color: #2196f3;"></div><span>Data Processor</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #f3e5f5; border-color: #9c27b0;"></div><span>AI Agent</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background: #e0f2f1; border-color: #009688;"></div><span>Final Output</span></div>
                     </div>
                     <div class="phase">
                         <h2 class="phase-title">Phase 1: Input & Multi-Platform Adaptation</h2><p class="phase-desc">The workflow receives a single script and uses a specialized AI agent to adapt it for three platforms: YouTube, LinkedIn, and TikTok.</p>
                         <div class="nodes">
                             <div class="node trigger"><div class="node-title">When Executed by Another Workflow</div><div class="node-desc">Receives a finished script to be repurposed.</div></div>
-                            <div class="node processor"><div class="node-title">Set Test Script</div><div class="node-desc">Loads the incoming script for adaptation.</div></div>
-                            <div class="node ai-agent"><div class="node-title">Multi-Platform Script Adapter</div><div class="node-desc">AI agent rewrites the script into three versions, optimized for each platform's tone and structure.</div></div>
+                            <div class="node ai-agent">
+                                <div class="node-title">Multi-Platform Script Adapter</div>
+                                <div class="node-desc">An AI agent rewrites the original script into three distinct versions, each with platform-specific hooks, structure, and tone.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>AI System Prompt</h4>
+                                    <p>Instructs the AI to be a "Multi-Platform Content Adaptation Engine". It has specific sub-instructions for each platform:</p>
+                                    <p><strong>YouTube:</strong> Focus on educational authority and storytelling.</p>
+                                    <p><strong>LinkedIn:</strong> Focus on professional thought leadership.</p>
+                                    <p><strong>TikTok:</strong> Focus on high-energy value and entertainment.</p>
+                                    <p>It must return exactly 3 adaptations in a single JSON response.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
                         <h2 class="phase-title">Phase 2: Itemization & Quality Check</h2><p class="phase-desc">The three script adaptations are split into individual items, and each one is run through a quality checker to score its suitability.</p>
                          <div class="nodes">
-                            <div class="node processor"><div class="node-title">Split Into Platform Items</div><div class="node-desc">Separates the three AI adaptations into individual items.</div></div>
-                            <div class="node processor"><div class="node-title">Content Quality Checker</div><div class="node-desc">Analyzes each script for length, engagement, and platform optimization, assigning a score.</div></div>
+                            <div class="node processor"><div class="node-title">Split Into Platform Items</div><div class="node-desc">Separates the three AI-generated adaptations into individual data items for processing.</div></div>
+                            <div class="node processor">
+                                <div class="node-title">Content Quality Checker</div>
+                                <div class="node-desc">Analyzes each script for length, engagement cues, and platform optimization, assigning a quality score.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                     <h4>Logic</h4>
+                                    <p>Calculates a score from 0 to 1 based on four criteria:</p>
+                                    <p>1. Is the script length appropriate for the platform?</p>
+                                    <p>2. Does it contain platform-specific keywords (e.g., "insight" for LinkedIn)?</p>
+                                    <p>3. Are all required fields (title, script, notes) complete?</p>
+                                    <p>4. Does it include audience engagement language (e.g., "you", "?")?</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
                     <div class="phase">
                         <h2 class="phase-title">Phase 3: Iterative Content Improvement Loop</h2><p class="phase-desc">A decision node checks the quality score. If a script is subpar, it's sent to a "Content Improvement Agent" for a rewrite; otherwise, it proceeds.</p>
                         <div class="nodes">
-                            <div class="node router"><div class="node-title">If Needs Improvement</div><div class="node-desc">Routes low-scoring scripts for a rewrite.</div></div>
-                            <div class="node ai-agent"><div class="node-title">Content Improvement Agent</div><div class="node-desc">A second AI agent performs a targeted rewrite to fix specific issues.</div></div>
-                            <div class="node processor"><div class="node-title">Quality Re-Check</div><div class="node-desc">Assigns a passing score to the improved script to exit the loop.</div></div>
+                            <div class="node router">
+                                <div class="node-title">If Needs Improvement</div>
+                                <div class="node-desc">Routes low-scoring scripts for a rewrite.</div>
+                                <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>Condition</h4>
+                                    <p>Checks if `needs_improvement` is `true`. This flag is set in the previous node if the quality score is below 0.75.</p>
+                                </div>
+                            </div>
+                            <div class="node ai-agent">
+                                <div class="node-title">Content Improvement Agent</div>
+                                <div class="node-desc">A second AI agent receives the script and a list of identified issues, then performs a targeted rewrite.</div>
+                                 <button class="details-toggle" onclick="toggleDetails(this)">Show Details</button>
+                                <div class="node-details">
+                                    <h4>AI System Prompt</h4>
+                                    <p>Instructs the AI to be a "Content Quality Enhancement Specialist". The prompt dynamically includes the list of issues found by the Quality Checker node and tells the AI to specifically fix them while preserving the core message.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-arrow">↓</div>
@@ -444,7 +559,7 @@
                         <h2 class="phase-title">Phase 4: Final Assembly & Notion Export</h2><p class="phase-desc">All high-quality and improved scripts are formatted and exported to a dedicated Notion database.</p>
                         <div class="nodes">
                             <div class="node output"><div class="node-title">Create Notion Pages</div><div class="node-desc">Creates a new page in the 'Tone of Voice' database for each adaptation.</div></div>
-                            <div class="node processor"><div class="node-title">Build Notion Content</div><div class="node-desc">Constructs the body of the Notion page with structured blocks.</div></div>
+                            <div class="node processor"><div class="node-title">Build Notion Content</div><div class="node-desc">Constructs the body of the Notion page with structured blocks for the original script, adapted script, hooks, and production notes.</div></div>
                             <div class="node output"><div class="node-title">Update Notion Pages</div><div class="node-desc">Appends the content to the newly created Notion pages.</div></div>
                         </div>
                     </div>
@@ -468,6 +583,65 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+
+        function toggleDetails(button) {
+            const details = button.nextElementSibling;
+            if (details.style.display === "block") {
+                details.style.display = "none";
+                button.textContent = "Show Details";
+            } else {
+                details.style.display = "block";
+                button.textContent = "Hide Details";
+            }
+        }
+
+        // --- ANIMATIONS ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const animateCounters = (obs, observer) => {
+                obs.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = +el.getAttribute('data-target');
+                        const isPlus = el.getAttribute('data-target').includes('+');
+                        const duration = 1500;
+                        const frameRate = 1000 / 60;
+                        const totalFrames = Math.round(duration / frameRate);
+                        let currentFrame = 0;
+
+                        const counter = setInterval(() => {
+                            currentFrame++;
+                            const progress = currentFrame / totalFrames;
+                            const currentNum = Math.round(target * progress);
+                            el.innerText = currentNum.toLocaleString();
+                            if(target > 999 && el.getAttribute('data-target').includes('1000')) el.innerText += "+";
+
+
+                            if (currentFrame === totalFrames) {
+                                clearInterval(counter);
+                                el.innerText = target.toLocaleString() + (isPlus ? '+' : '');
+                            }
+                        }, frameRate);
+                        observer.unobserve(el);
+                    }
+                });
+            };
+
+            const animatePhases = (entries, observer) => {
+                 entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const counterObserver = new IntersectionObserver(animateCounters, { threshold: 0.5 });
+            document.querySelectorAll('.stat-number').forEach(counter => counterObserver.observe(counter));
+
+            const phaseObserver = new IntersectionObserver(animatePhases, { threshold: 0.1 });
+            document.querySelectorAll('.phase').forEach(phase => phaseObserver.observe(phase));
+        });
+
     </script>
 
 </body>
